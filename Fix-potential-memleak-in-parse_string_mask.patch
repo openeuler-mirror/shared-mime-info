@@ -1,0 +1,28 @@
+From a4242c868c1ee7e65bbdab7ac07c50ebdb16638a Mon Sep 17 00:00:00 2001
+From: Bastien Nocera <hadess@hadess.net>
+Date: Tue, 24 Jul 2018 13:55:15 +0200
+Subject: [PATCH 06/41] Fix potential memleak in parse_string_mask()
+
+parsed_mask needs to be freed before the potential exit in
+g_return_val_if_fail()
+---
+ update-mime-database.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/update-mime-database.c b/update-mime-database.c
+index 5780bd9..2ef3596 100644
+--- a/update-mime-database.c
++++ b/update-mime-database.c
+@@ -1339,8 +1339,8 @@ static char *parse_string_mask(const char *mask, int len, GError **error)
+ 
+ 	return parsed_mask;
+ err:
+-	g_return_val_if_fail(error == NULL || *error != NULL, NULL);
+ 	g_free(parsed_mask);
++	g_return_val_if_fail(error == NULL || *error != NULL, NULL);
+ 	return NULL;
+ }
+ 
+-- 
+1.8.3.1
+

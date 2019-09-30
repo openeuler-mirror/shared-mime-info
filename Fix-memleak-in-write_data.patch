@@ -1,0 +1,26 @@
+From 2a7b8f1608bf4ad42fdac5992c6b33050b6d8fea Mon Sep 17 00:00:00 2001
+From: Bastien Nocera <hadess@hadess.net>
+Date: Tue, 24 Jul 2018 13:57:24 +0200
+Subject: [PATCH 07/41] Fix memleak in write_data()
+
+s is allocated but never freed.
+---
+ update-mime-database.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/update-mime-database.c b/update-mime-database.c
+index 2ef3596..d48e69a 100644
+--- a/update-mime-database.c
++++ b/update-mime-database.c
+@@ -2240,6 +2240,8 @@ write_data (FILE *cache, const gchar *n, gint len)
+ 
+   i = fwrite (s, l, 1, cache);
+ 
++  g_free(s);
++
+   return i == 1;
+   
+ }
+-- 
+1.8.3.1
+
