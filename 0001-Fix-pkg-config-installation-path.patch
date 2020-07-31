@@ -1,0 +1,21 @@
+From 96f1795fb16d9ae67c9eabfc0e0f45a34794ae43 Mon Sep 17 00:00:00 2001
+From: chxssg <chxssg@qq.com>
+Date: Thu, 30 Jul 2020 20:24:36 +0800
+Subject: [PATCH] Fix pkg-config installation path
+
+---
+ data/meson.build | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/data/meson.build b/data/meson.build
+--- a/data/meson.build
++++ b/data/meson.build
+@@ -38,4 +38,5 @@ pkgconfig.generate(
+     name: 'shared-mime-info',
+     description: 'Freedesktop common MIME database',
+     version: meson.project_version(),
++    install_dir: get_option('datadir') / 'pkgconfig'
+ )
+-- 
+2.23.0
+
