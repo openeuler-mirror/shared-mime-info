@@ -1,11 +1,11 @@
 Name:	    shared-mime-info	
 Version:	2.0
-Release:	1
+Release:	2
 Summary:	Shared MIME information database
 License:	GPLv2+
 URL:		https://freedesktop.org/wiki/Software/shared-mime-info/
 
-Source0:	http://freedesktop.org/~hadess/%{name}-%{version}.tar.bz2
+Source0:	http://gitlab.freedesktop.org/xdg/%{name}/-/archive/%{version}/%{name}-%{version}.tar.bz2
 Source1:        gnome-mimeapps.list
 Source2:        totem-defaults.list
 Source3:        file-roller-defaults.list
@@ -83,6 +83,12 @@ update-mime-database -n %{_datadir}/mime &> /dev/null ||:
 %{_mandir}/man1/*.gz
 
 %changelog
+* Thu Sep 10 2020 hanhui <hanhui15@huawei.com> - 2.0-2
+- Type:bugfix
+- ID:NA
+- SUG:NA
+- DESC:modify source url
+
 * Thu Jul 31 2020 chxssg<chxssg@qq.com> - 2.0-1
 - Update to 2.0
 
