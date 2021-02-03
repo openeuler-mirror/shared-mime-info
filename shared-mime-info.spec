@@ -1,18 +1,14 @@
 Name:	    shared-mime-info	
-Version:	2.0
-Release:	2
+Version:	2.1
+Release:	1
 Summary:	Shared MIME information database
 License:	GPLv2+
 URL:		https://freedesktop.org/wiki/Software/shared-mime-info/
 
-Source0:	http://gitlab.freedesktop.org/xdg/%{name}/-/archive/%{version}/%{name}-%{version}.tar.bz2
-Source1:        gnome-mimeapps.list
-Source2:        totem-defaults.list
-Source3:        file-roller-defaults.list
-Source4:        eog-defaults.list
+Source0:	https://gitlab.freedesktop.org/xdg/shared-mime-info/uploads/0ee50652091363ab0d17e335e5e74fbe/shared-mime-info-2.1.tar.xz
+Source1:    mimeapps.list
 
-Patch0:     0001-Fix-pkg-config-installation-path.patch
-Patch1:     0002-Update-compilation-instructions.patch
+Patch0:     0001-Remove-sub-classing-from-OO.o-mime-types.patch
 
 BuildRequires:	gcc libxml2-devel glib2-devel gettext intltool perl-XML-Parser meson itstool xmlto
 
@@ -47,14 +43,9 @@ find $RPM_BUILD_ROOT%{_datadir}/mime -type f -not -path "*/packages/*" \
 | sed -e "s|^$RPM_BUILD_ROOT|%%ghost |" >> %{name}.files
 
 install -d  $RPM_BUILD_ROOT%{_datadir}/applications
-install -p -m 644 %SOURCE1 $RPM_BUILD_ROOT%{_datadir}/applications/gnome-mimeapps.list
-cat %SOURCE2 >> $RPM_BUILD_ROOT%{_datadir}/applications/gnome-mimeapps.list
-cat %SOURCE3 >> $RPM_BUILD_ROOT%{_datadir}/applications/gnome-mimeapps.list
-cat %SOURCE4 >> $RPM_BUILD_ROOT%{_datadir}/applications/gnome-mimeapps.list
+install -m 644 %SOURCE1 $RPM_BUILD_ROOT/%{_datadir}/applications/mimeapps.list
 
-pushd $RPM_BUILD_ROOT%{_datadir}/applications
-install -p -m 644 gnome-mimeapps.list mimeapps.list
-popd
+
 
 %check
 %meson_test
@@ -83,6 +74,9 @@ update-mime-database -n %{_datadir}/mime &> /dev/null ||:
 %{_mandir}/man1/*.gz
 
 %changelog
+* Mon Feb 1 2021 jinzhimin <jinzhimin2@huawei.com> - 2.1-1
+- Upgrade to 2.1
+
 * Thu Sep 10 2020 hanhui <hanhui15@huawei.com> - 2.0-2
 - Type:bugfix
 - ID:NA
