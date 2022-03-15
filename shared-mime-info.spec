@@ -1,6 +1,6 @@
 Name:	    shared-mime-info	
 Version:	2.1
-Release:	1
+Release:	2
 Summary:	Shared MIME information database
 License:	GPLv2+
 URL:		https://freedesktop.org/wiki/Software/shared-mime-info/
@@ -48,7 +48,11 @@ install -m 644 %SOURCE1 $RPM_BUILD_ROOT/%{_datadir}/applications/mimeapps.list
 
 
 %check
+%ifarch riscv64
+%meson_test --timeout-multiplier=10
+%else
 %meson_test
+%endif
 
 %post
 /bin/touch --no-create %{_datadir}/mime/packages &>/dev/null ||:
@@ -74,6 +78,9 @@ update-mime-database -n %{_datadir}/mime &> /dev/null ||:
 %{_mandir}/man1/*.gz
 
 %changelog
+* Tue Mar 15 2022 YukariChiba <i@0x7f.cc> - 2.1-2
+- Adjust timeout for RISC-V to avoid test timeout.
+
 * Mon Feb 1 2021 jinzhimin <jinzhimin2@huawei.com> - 2.1-1
 - Upgrade to 2.1
 
